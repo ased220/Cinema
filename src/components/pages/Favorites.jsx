@@ -3,7 +3,7 @@ import BannerFavorites from '../Favorites/BannerFavorites'
 import FavoritesList from '../Favorites/FavoritesList'
 
 
-import Filter from '../Filter'
+import Filter from '../Filter/Filter'
 import MoviesList from '../Movies/MoviesList'
 import MoviesScroll from '../Movies/MoviesScroll'
 
