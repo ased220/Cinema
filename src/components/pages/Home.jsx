@@ -4,6 +4,9 @@ import MoviesList from '../Movies/MoviesList';
 import MoviesScroll from '../Movies/MoviesScroll';
 
 export default function Home(){
+
+
+
     return(
         <>
             <BannerHome />
