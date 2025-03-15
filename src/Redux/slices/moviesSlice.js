@@ -5,7 +5,7 @@ const initialState = {
      films: [],
      searchFilm: {
         film: null,
-        status: "loading",
+        status: "loading...",
         error: null,
      },
      status: null,
@@ -15,6 +15,7 @@ const initialState = {
 export const fetchMovies = createAsyncThunk('movie/fetchMovies', async () => {
     try {
         const response = await axios.get('https://67c063aeb9d02a9f224981ff.mockapi.io/ednpoint/movie');
+        
         return response.data; 
     } catch (error) {
         console.error(error);
@@ -43,9 +44,8 @@ const moviesSlice = createSlice({
             })
             .addCase(fetchMovies.fulfilled, (state, action) =>{
                
-                state.films = action.payload;
-                console.log(state.films);
-                
+                state.films = action.payload;  
+                            
                 state.status = 'fullfield';
             })
             .addCase(fetchMovies.rejected, (state, action) =>{

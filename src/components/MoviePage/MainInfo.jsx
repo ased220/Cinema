@@ -11,18 +11,21 @@ export default function MainInfo(){
     
     const dispatch = useDispatch();
     useEffect(() =>{
-        dispatch( searchFilmInState(id))
+        dispatch( searchFilmInState(id));
     }, [dispatch])
 
     const { searchFilm } = useSelector(store => store.movies)  
-    if (!searchFilm) {
-        return <div>Loading...</div>;
-    }
-    console.log(searchFilm)
+   
     return (
         <div className="main__info">
-            <MovieLeft filmInfo = {{...searchFilm}}/>
-            <MovieRight />
+        { 
+            searchFilm.status === "loading..." ? 
+                (<p> loading </p>) : 
+                (<>
+                    <MovieLeft filmInfo = {{...searchFilm}}/>
+                    <MovieRight filmInfo = {{...searchFilm}}/>
+                </>) 
+        }
         </div>
     )
 }

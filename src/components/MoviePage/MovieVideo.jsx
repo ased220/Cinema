@@ -1,11 +1,30 @@
-import Titanic from '../../assets/videos/Титаник (1997) «Titanic» - Трейлер (Trailer) - Что посмотреть_ (1080p, h264).mp4'
+import { useSelector } from 'react-redux'
+
+import { searchParamInYoutube } from '../../tools/searchParamInYoutube';
 
 export default function MovieVideo(){
+    const { searchFilm } = useSelector((store) => store.movies)  
+    console.log(searchFilm);
+    const trailerUrl = searchFilm.film.trailerUrl;
+
+    const videoUrl = searchParamInYoutube(trailerUrl);
     return (
-        <div className="video-wrapper">
-            <video controls>
-                <source src={ Titanic } type="video/mp4"/>
-            </video>
-        </div>
-    )
+        <>
+        {searchFilm.status === "loading..." ?  (
+            <p> loading </p>
+        ) : (
+            <div className="video-wrapper">
+                <iframe 
+                    src={`https://www.youtube.com/embed/${videoUrl}`}
+                    title='youtube player'
+                    width= '100%'
+                    height='700'
+                    allow='accelerometer; autoplay; clipboard-write; encripted-media; gyroscope; picture-in-picture; web-share'
+                    allowFullScreen
+                ></iframe>
+            </div>
+            )
+        }
+        </>
+    );
 }
