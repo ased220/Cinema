@@ -1,10 +1,13 @@
-
 import Rating from "./Rating"
-export default function MovieLeft(){
+
+export default function MovieLeft(props){
+    console.log(props)
+
+    const dataFilm = props.filmInfo.film;
     return (
         <div className="main__info-left">
             <div className="main__info-left-title">
-                <p>Бегущий по лезвию 2049</p>
+                <p></p>
                 <Rating />
             </div>
             <div className="main__info-left-categoryes">

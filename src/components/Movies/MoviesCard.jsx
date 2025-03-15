@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom'
 import Star from '../../assets/icons/star.png'
-// import ImgFilm from '../../assets/ImageFılm.jpg'
-
 
 
 export default function MoviesCard(props){
@@ -9,7 +7,7 @@ export default function MoviesCard(props){
 
     return(
        
-        <Link className="movies__card" to="movie">
+        <Link className="movies__card" to={`/movie/${props.id}`}>    
             
             <div className="movies__card-rating">
                 <img src={ Star} alt="" />

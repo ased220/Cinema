@@ -1,21 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
      films: [],
+     searchFilm: {
+        film: null,
+        status: "loading",
+        error: null,
+     },
      status: null,
      errors: null
 }
 
 export const fetchMovies = createAsyncThunk('movie/fetchMovies', async () => {
     try {
-        const movies = await fetch('https://67c063aeb9d02a9f224981ff.mockapi.io/ednpoint/movie');
-        if (!movies.ok){
-            throw new Error('Error on server, sorry')
-        }
-        return movies.json();
+        const response = await axios.get('https://67c063aeb9d02a9f224981ff.mockapi.io/ednpoint/movie');
+        return response.data; 
     } catch (error) {
         console.error(error);
-        throw error;}
+        throw error; 
+    }
+
 });
 
 
@@ -23,21 +28,28 @@ const moviesSlice = createSlice({
     name: 'movie',
     initialState,   
     reducers:{
-
+        searchFilmInState: (state, action) =>{
+            const { id } = action.payload;
+            const searchFilm = state.films.find( film => film.id === id);
+            
+            state.searchFilm.film = searchFilm;
+            state.searchFilm.status= 'fullfield'
+        }
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMovies.pending, (state) =>{
             state.status = 'loading...'
-            // console.log(state.status);
             })
             .addCase(fetchMovies.fulfilled, (state, action) =>{
-                console.log(action.payload);
+               
                 state.films = action.payload;
+                console.log(state.films);
+                
                 state.status = 'fullfield';
             })
             .addCase(fetchMovies.rejected, (state, action) =>{
-                state.status = 'Error...'
+                state.status = 'loading...'
                 state.errors = action.error.message; 
                 console.error(action.error.message);
         })
@@ -46,4 +58,4 @@ const moviesSlice = createSlice({
 
 export default moviesSlice.reducer;
 
- 
+export const { searchFilmInState } = moviesSlice.actions;
