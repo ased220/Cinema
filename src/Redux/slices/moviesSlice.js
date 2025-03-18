@@ -5,7 +5,7 @@ const initialState = {
      films: [],
      searchFilm: {
         film: null,
-        status: "loading...",
+        status: "loading",
         error: null,
      },
      status: null,
@@ -34,22 +34,22 @@ const moviesSlice = createSlice({
             const searchFilm = state.films.find( film => film.id === id);
             
             state.searchFilm.film = searchFilm;
-            state.searchFilm.status= 'fullfield'
+            state.searchFilm.status= 'fulfilled'
         }
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMovies.pending, (state) =>{
-            state.status = 'loading...'
+            state.status = 'loading'
             })
             .addCase(fetchMovies.fulfilled, (state, action) =>{
                
                 state.films = action.payload;  
                             
-                state.status = 'fullfield';
+                state.status = 'fulfilled';
             })
             .addCase(fetchMovies.rejected, (state, action) =>{
-                state.status = 'loading...'
+                state.status = 'loading'
                 state.errors = action.error.message; 
                 console.error(action.error.message);
         })

@@ -8,18 +8,22 @@ import { searchFilmInState } from "../../Redux/slices/moviesSlice";
 export default function MainInfo(){
 
     const id = useParams();
-    
     const dispatch = useDispatch();
-    useEffect(() =>{
-        dispatch( searchFilmInState(id));
-    }, [dispatch])
 
-    const { searchFilm } = useSelector(store => store.movies)  
+    const { searchFilm, status } = useSelector(store => store.movies)  
+
+    
+    useEffect(() =>{
+        if (status === 'fulfilled'){
+            dispatch( searchFilmInState(id));
+        }
+    }, [dispatch, status]);
+
    
     return (
         <div className="main__info">
         { 
-            searchFilm.status === "loading..." ? 
+            searchFilm.status === "loading" ? 
                 (<p> loading </p>) : 
                 (<>
                     <MovieLeft filmInfo = {{...searchFilm}}/>
