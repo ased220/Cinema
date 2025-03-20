@@ -694,3 +694,10 @@ main > video {
     background-color: #222127;
     border-radius: 19px;
 }
+
+.main__info-left-favorite{
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    font-size: 20px; 
+}
