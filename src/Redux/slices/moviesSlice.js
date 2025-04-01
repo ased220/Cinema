@@ -3,13 +3,15 @@ import axios from "axios";
 
 const initialState = {
      films: [],
+     filmCategory: [],
      searchFilm: {
         film: null,
         status: "loading",
         error: null,
      },
      status: null,
-     errors: null
+     errors: null,
+     filteredMovies:[]
 }
 
 export const fetchMovies = createAsyncThunk('movie/fetchMovies', async () => {
@@ -35,6 +37,10 @@ const moviesSlice = createSlice({
             
             state.searchFilm.film = searchFilm;
             state.searchFilm.status= 'fulfilled'
+        },
+        filterMovies: (state, action) =>{
+            const filterItem = action.payload.toLowerCase();
+            state.filteredMovies = state.films.filter(movie => movie.title.toLowerCase().includes(filterItem));
         }
     },
     extraReducers: (builder) => {
@@ -45,7 +51,8 @@ const moviesSlice = createSlice({
             .addCase(fetchMovies.fulfilled, (state, action) =>{
                
                 state.films = action.payload;  
-                            
+                state.filmCategory = [...new Set(state.films.flatMap(value => value.category))]
+                
                 state.status = 'fulfilled';
             })
             .addCase(fetchMovies.rejected, (state, action) =>{
@@ -58,4 +65,4 @@ const moviesSlice = createSlice({
 
 export default moviesSlice.reducer;
 
-export const { searchFilmInState } = moviesSlice.actions;
+export const { searchFilmInState, filterMovies } = moviesSlice.actions;

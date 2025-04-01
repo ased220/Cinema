@@ -9,9 +9,9 @@ import { useSelector } from "react-redux";
 export default function MoviesList(){
     const path = useLocation();
 
-    const { films, status} = useSelector( store => store.movies );    
+    const { films, status, filteredMovies } = useSelector( store => store.movies );    
     const { favoriteMovies } = useSelector( store => store.favorites);
-    
+    const filterMovie = filteredMovies.length > 0 ? filteredMovies : films;
 
     const renderFavorites = () => {
         if (path.pathname === '/favorites'){
@@ -22,9 +22,9 @@ export default function MoviesList(){
                 <p> У вас отсутствуют избранные фильмы</p>)
         } else {
             return status === 'loading...' ?(
-                [... new Array(30)].map(( _ , index) => <SkeletonFilm key = {index} />)
+                [... new Array(30)].map((_ , index) => <SkeletonFilm key = {index} />)
                 ) : (
-                films.map( (value, index) => 
+                filterMovie.map( (value, index) => 
                         <MoviesCard key = {index} {...value} />)
                 )
         }

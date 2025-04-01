@@ -1,14 +1,15 @@
 import { useState } from "react"
+import { useSelector } from "react-redux"
 
 
 export default function FilterButton(){
 
-    const categories = ['Movies', 'Cinema','Adventure','Comedy','Fantasy','History','Cartoon','Detective','Mysticism','Drama']
+    const { filmCategory } = useSelector(store => store.movies)
     const [active, changeActive] = useState('Movies')
     return (
         <div className="filter__buttons">
             {
-                categories.map((value, index)=>(
+                filmCategory.map((value, index)=>(
                     <button 
                     key = {index} 
                     className={value === active? 'active':''}
