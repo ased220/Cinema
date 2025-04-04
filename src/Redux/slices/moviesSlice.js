@@ -11,7 +11,8 @@ const initialState = {
      },
      status: null,
      errors: null,
-     filteredMovies:[]
+     filteredMovies:[],
+     sortCategoryFilteredMovies:[],
 }
 
 export const fetchMovies = createAsyncThunk('movie/fetchMovies', async () => {
@@ -39,8 +40,21 @@ const moviesSlice = createSlice({
             state.searchFilm.status= 'fulfilled'
         },
         filterMovies: (state, action) =>{
-            const filterItem = action.payload.toLowerCase();
-            state.filteredMovies = state.films.filter(movie => movie.title.toLowerCase().includes(filterItem));
+            if (action.payload === ''){
+                state.filteredMovies = []
+            }else {
+                const filterItem = action.payload.toLowerCase();
+                state.filteredMovies = state.films.filter(movie => movie.title.toLowerCase().includes(filterItem));
+            }
+        },
+        searchSortFilteredMovies: (state, action) => {
+            if ( action.payload === 'All'){
+                state.sortCategoryFilteredMovies =[];
+            }
+            const searchFilms = state.films.filter((value) => value.category.includes(action.payload));
+            
+            state.sortCategoryFilteredMovies = searchFilms;
+
         }
     },
     extraReducers: (builder) => {
@@ -65,4 +79,4 @@ const moviesSlice = createSlice({
 
 export default moviesSlice.reducer;
 
-export const { searchFilmInState, filterMovies } = moviesSlice.actions;
+export const { searchFilmInState, filterMovies, searchSortFilteredMovies } = moviesSlice.actions;
