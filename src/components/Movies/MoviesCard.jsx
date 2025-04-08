@@ -6,6 +6,7 @@ import Star from '../../assets/icons/star.png'
 export default function MoviesCard(props){
 
     
+    
 
     return(
        

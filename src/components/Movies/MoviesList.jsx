@@ -4,6 +4,7 @@ import SkeletonFilm from "../Skeletons/SkeletonFilm.jsx";
 import MoviesCard from "./MoviesCard";
 
 import { useSelector } from "react-redux";
+import FavoritesMoviesList from "./FavoritesMoviesList.jsx";
 
 
 export default function MoviesList(){
@@ -32,13 +33,7 @@ export default function MoviesList(){
 
     const renderFavorites = () => {
         if (path.pathname === '/favorites') {
-            return favoriteMovies.length > 0 ? (
-                favoriteMovies.map((value, index) =>
-                    <MoviesCard key={index} {...value} sortCategoryFilteredMovies={sortCategoryFilteredMovies} />
-                )
-            ) : (
-                <p>У вас отсутствуют избранные фильмы</p>
-            );
+            return <FavoritesMoviesList favorites = {{favoriteMovies, filteredMovies, sortCategoryFilteredMovies}} />
         } else {
             if (status === 'loading...') {
                 return (
@@ -50,8 +45,6 @@ export default function MoviesList(){
             }
         }
     };
-
-    
 
     return(
         <div id="movies" className="movies anchor">
